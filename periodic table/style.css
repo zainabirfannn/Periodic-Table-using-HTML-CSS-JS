@@ -1,0 +1,445 @@
+/* =========================================================
+   Pastel Periodic Table - No-Scroll Fullscreen Styling
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* No scrollbars */
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #faf9f6;
+  color: #374151;
+}
+
+.table-container {
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px;
+  overflow: hidden;
+}
+
+/* Compact Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 6px;
+  gap: 12px;
+}
+
+.header-titles h1 {
+  font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+  font-weight: 700;
+  color: #2d3748;
+  line-height: 1.2;
+}
+
+.header-titles .subtitle {
+  font-size: clamp(0.72rem, 0.85vw, 0.82rem);
+  color: #718096;
+}
+
+/* Compact Search Bar */
+.search-wrap {
+  flex-shrink: 0;
+}
+
+.search-wrap input {
+  width: clamp(190px, 22vw, 290px);
+  padding: 5px 14px;
+  font-size: 0.82rem;
+  font-family: inherit;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 20px;
+  background-color: #ffffff;
+  color: #2d3748;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.search-wrap input:focus {
+  border-color: #b8c1ec;
+  box-shadow: 0 2px 8px rgba(184, 193, 236, 0.35);
+}
+
+/* Compact Pastel Category Legend */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+
+.legend-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-size: clamp(0.65rem, 0.72vw, 0.72rem);
+  font-weight: 600;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  line-height: 1.2;
+}
+
+.legend-circle {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Periodic Grid Container (Fits 100% of remaining height with NO scroll) */
+.table-scroll-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+/* 18-Column CSS Grid */
+.periodic-grid {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(18, minmax(0, 1fr));
+  grid-template-rows: repeat(7, minmax(0, 1fr)) 6px repeat(2, minmax(0, 1fr));
+  gap: 3px;
+}
+
+/* Element Tile */
+.element-card {
+  position: relative;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  padding: 2px 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.element-card:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+}
+
+.element-card:active {
+  transform: scale(0.96);
+}
+
+.element-card.dimmed {
+  opacity: 0.16;
+  filter: grayscale(70%);
+  pointer-events: none;
+}
+
+/* Tile Texts */
+.card-number {
+  font-size: clamp(0.48rem, 0.6vw, 0.62rem);
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+  padding-left: 2px;
+  opacity: 0.85;
+}
+
+.card-symbol {
+  font-size: clamp(0.85rem, 1.25vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 1px 0;
+}
+
+.card-name {
+  font-size: clamp(0.44rem, 0.58vw, 0.6rem);
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.95;
+}
+
+/* Lanthanide & Actinide Placeholder markers */
+.series-marker {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f3f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 5px;
+  font-size: clamp(0.5rem, 0.65vw, 0.65rem);
+  font-weight: 700;
+  color: #64748b;
+  text-align: center;
+  padding: 1px;
+  line-height: 1.1;
+}
+
+.series-marker-name {
+  font-size: clamp(0.44rem, 0.55vw, 0.55rem);
+  font-weight: 500;
+}
+
+/* =========================================================
+   Pastel Category Color Palette
+   ========================================================= */
+
+/* Reactive Nonmetals - Soft Mint */
+.cat-nonmetal {
+  background-color: #d8f5e5;
+  border-color: #a8ebd3;
+  color: #165b38;
+}
+
+/* Noble Gases - Soft Lavender */
+.cat-noble-gas {
+  background-color: #ede2ff;
+  border-color: #d7bfff;
+  color: #4b267e;
+}
+
+/* Alkali Metals - Soft Pastel Pink */
+.cat-alkali-metal {
+  background-color: #ffd8df;
+  border-color: #fcaebc;
+  color: #791e30;
+}
+
+/* Alkaline Earth Metals - Soft Peach */
+.cat-alkaline-earth {
+  background-color: #ffe8d3;
+  border-color: #fed0a7;
+  color: #7c3a0d;
+}
+
+/* Metalloids - Soft Pastel Aqua */
+.cat-metalloid {
+  background-color: #d1f4f0;
+  border-color: #a3e8e1;
+  color: #125750;
+}
+
+/* Post-Transition Metals - Soft Sky Blue */
+.cat-post-transition {
+  background-color: #d4ecff;
+  border-color: #a7d6ff;
+  color: #134e79;
+}
+
+/* Transition Metals - Soft Butter Yellow */
+.cat-transition-metal {
+  background-color: #fef5c8;
+  border-color: #fce789;
+  color: #6a5704;
+}
+
+/* Lanthanides - Soft Rose Pink */
+.cat-lanthanide {
+  background-color: #fde0ef;
+  border-color: #fbb3dd;
+  color: #751a54;
+}
+
+/* Actinides - Soft Lilac Violet */
+.cat-actinide {
+  background-color: #e5defc;
+  border-color: #c7b9f8;
+  color: #492888;
+}
+
+/* Unknown / Superheavy - Soft Slate */
+.cat-unknown {
+  background-color: #eceff4;
+  border-color: #cfd6e0;
+  color: #475569;
+}
+
+/* =========================================================
+   Simple Element Information Modal Popup
+   ========================================================= */
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.modal-box {
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  padding: 22px 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.14);
+  text-align: center;
+  animation: popIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #a0aec0;
+  cursor: pointer;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  color: #4a5568;
+  background-color: #edf2f7;
+}
+
+/* Big Pastel Badge in Modal */
+.modal-badge {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 95px;
+  height: 95px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  margin: 2px auto 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.badge-num {
+  font-size: 0.8rem;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.badge-symbol {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.badge-mass {
+  font-size: 0.72rem;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+.modal-name {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 2px;
+}
+
+.modal-category-tag {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+/* Modal Info List Rows */
+.modal-info-list {
+  background-color: #f8fafc;
+  border: 1px solid #edf2f7;
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  text-align: left;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* Modal Description */
+.modal-description {
+  text-align: left;
+  background-color: #fffaf0;
+  border: 1px solid #feebc8;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.modal-description h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: #9c4221;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+}
+
+.modal-description p {
+  font-size: 0.84rem;
+  color: #4a5568;
+  line-height: 1.45;
+}
